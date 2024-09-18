@@ -5,6 +5,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.monkey.ashe.common.holder.RequestIdHolder;
 import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -18,7 +19,7 @@ import java.util.UUID;
  * @since 2024/8/30 10:30
  */
 @Aspect
-@Component
+//@Component
 @Order(1)
 @Slf4j
 public class ControllerRequestIdAspect {
@@ -30,6 +31,7 @@ public class ControllerRequestIdAspect {
     public Object doControllerPointAround(ProceedingJoinPoint joinPoint) throws Throwable {
         String requestId = UUID.randomUUID().toString().replaceAll("-", "");
         MDC.put("requestId", requestId);
+        RequestIdHolder.setRequestId(requestId);
         Object result = null;
         try {
             result = joinPoint.proceed();

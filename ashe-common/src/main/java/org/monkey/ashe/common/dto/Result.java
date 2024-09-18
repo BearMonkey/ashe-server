@@ -2,6 +2,7 @@ package org.monkey.ashe.common.dto;
 
 import lombok.Data;
 import org.monkey.ashe.common.enums.AsheError;
+import org.slf4j.MDC;
 
 import java.io.Serializable;
 
@@ -14,6 +15,7 @@ import java.io.Serializable;
 @Data
 public class Result<T> implements Serializable {
     private static final long serialVersionUID = 1L;
+    private String requestId;
     private int code;
     private String msg;
     private T data;
@@ -28,6 +30,7 @@ public class Result<T> implements Serializable {
 
     public static <T> Result<T> ok(int code, String msg, T data) {
         Result<T> result = new Result<T>();
+        result.setRequestId(MDC.get("requestId"));
         result.setCode(code);
         result.setMsg(msg);
         result.setData(data);
@@ -44,6 +47,7 @@ public class Result<T> implements Serializable {
 
     public static <T> Result<T> fail(int code, String msg, T data) {
         Result<T> result = new Result<T>();
+        result.setRequestId(MDC.get("requestId"));
         result.setCode(code);
         result.setMsg(msg);
         result.setData(data);
