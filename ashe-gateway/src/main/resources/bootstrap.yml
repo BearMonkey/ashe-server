@@ -1,0 +1,54 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: @profiles.active@
+  application:
+    name: ashe-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${nacos.host:127.0.0.1}:${nacos.port:8848}
+        namespace: ${nacos.namespace:9c67e952-4ba6-4ba3-9ecb-5f3b568fa56b}
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        group: DEFAULT_GROUP
+        file-extension: yml
+        shared-configs: ${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: ashe-test
+          uri: lb://ashe-test
+          predicates:
+            - Path=/test/**
+
+        - id: ashe-order
+          uri: lb://ashe-order
+          predicates:
+            - Path=/order/**
+#        - id: cc-user
+#          uri: lb://cc-user
+#          predicates:
+#            - Path=/user/**
+#
+#        - id: cc-auth
+#          uri: lb://cc-auth
+#          predicates:
+#            - Path=/auth/**
+#  security:
+#    user:
+#      name: admin
+#      password: 123456
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+logging:
+  file:
+    path: /www/ashe-server/logs
