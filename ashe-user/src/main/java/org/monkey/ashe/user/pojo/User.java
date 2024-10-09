@@ -1,6 +1,6 @@
 package org.monkey.ashe.user.pojo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDate;
@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+import org.monkey.ashe.common.pojo.BaseEntity;
 
 /**
  * <p>
@@ -19,43 +20,35 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author cc
- * @since 2024-08-30
+ * @since 2024-09-20
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("cc_platform_user")
-@ApiModel(value="PlatformUser对象", description="")
-public class PlatformUser implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+@TableName("cc_user")
+@ApiModel(value="User对象", description="")
+public class User extends BaseEntity {
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @TableField("name")
+    @ApiModelProperty(value = "账号")
+    private String account;
+
+    @ApiModelProperty(value = "密码")
+    private String password;
+
+    @ApiModelProperty(value = "姓名")
     private String name;
 
-    @TableField("birth")
+    @ApiModelProperty(value = "出生日期")
     private LocalDate birth;
 
-    @TableField("gender")
+    @ApiModelProperty(value = "性别 0 女，1男，null：未设置")
     private String gender;
 
-    @TableField("create_time")
-    private LocalDateTime createTime;
-
-    @TableField("create_user")
-    private String createUser;
-
-    @TableField("update_time")
-    private LocalDateTime updateTime;
-
-    @TableField("update_user")
-    private String updateUser;
-
-    @TableField("del_flag")
-    private String delFlag;
-
-
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
+    }
 }

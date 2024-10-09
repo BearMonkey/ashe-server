@@ -10,6 +10,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 /**
@@ -33,8 +34,11 @@ public class FeignConfig {
                 String requestId = null;
                 ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
                 if (null != attributes) {
-                    HttpServletRequest request = attributes.getRequest();
-                    requestId = request.getHeader(REQUEST_ID);
+                    HttpServletResponse response = attributes.getResponse();
+                    //HttpServletRequest request = attributes.getRequest();
+                    if (response != null) {
+                        requestId = response.getHeader(REQUEST_ID);
+                    }
                 }
                 if (requestId == null || requestId.isEmpty()) {
                     requestId = UUID.randomUUID().toString().replaceAll("-", "");

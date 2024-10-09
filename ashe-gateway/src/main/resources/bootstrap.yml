@@ -31,15 +31,16 @@ spring:
           uri: lb://ashe-order
           predicates:
             - Path=/order/**
-#        - id: cc-user
-#          uri: lb://cc-user
-#          predicates:
-#            - Path=/user/**
-#
-#        - id: cc-auth
-#          uri: lb://cc-auth
-#          predicates:
-#            - Path=/auth/**
+
+        - id: ashe-test-aaaa
+          uri: lb://ashe-test-aaaa
+          predicates:
+            - Path=/test-aaaa/**
+
+        - id: ashe-test-bbbb
+          uri: lb://ashe-test-bbbb
+          predicates:
+            - Path=/test-bbbb/**
 #  security:
 #    user:
 #      name: admin

@@ -1,7 +1,7 @@
 package org.monkey.ashe.user.service;
 
+import org.monkey.ashe.user.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.monkey.ashe.user.pojo.Order;
 
 /**
  * <p>
@@ -9,7 +9,8 @@ import org.monkey.ashe.user.pojo.Order;
  * </p>
  *
  * @author cc
- * @since 2024-08-30
+ * @since 2024-09-20
  */
-public interface OrderService extends IService<Order> {
+public interface IUserService extends IService<User> {
+
 }
